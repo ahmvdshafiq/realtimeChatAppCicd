@@ -2,14 +2,15 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_CREDENTIALS_ID = '564e7a8e-7f47-4031-aaf8-94446bbd3e98' // Docker credentials ID in Jenkins
+        DOCKER_CRED_ID = '564e7a8e-7f47-4031-aaf8-94446bbd3e98' 
+        DOCKERHUB_CRED_ID = 'cf3a74d7-7de7-4028-8b23-456dec1e21b8'
     }
 
     stages {
         stage('Checkout') {
             steps {
                 // Checkout the code from GitHub
-                git url: 'https://github.com/ahmvdshafiq/realtimeChatAppCicd', branch: 'main'
+                git url: 'https://github.com/ahmvdshafiq/realtimeChatAppCicd', branch: 'master'
             }
         }
 
@@ -36,7 +37,7 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
-                    docker.withRegistry('https://index.docker.io/v1/', 'dockerhub-credentials') {
+                    docker.withRegistry('https://index.docker.io/v1/', DOCKERHUB_CRED_ID) {
                         docker.image("madbakoyoko/node-chat-app:${env.BUILD_NUMBER}").push()
                     }
                 }
