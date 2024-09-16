@@ -25,8 +25,8 @@ pipeline {
             steps {
                 script {
                     withCredentials([string(credentialsId: 'DH_PASS', variable: 'DOCKER_PASS')]) {
-                        docker.withRegistry('https://index.docker.io/v1/', 'dockerhub-credentials') {
-                            sh 'echo $DOCKER_PASS | docker login -u yourusername --password-stdin'
+                        docker.withRegistry('https://index.docker.io/v1/', dockerhub-credentials) {
+                            sh 'echo $DOCKER_PASS | docker login -u yourusername'
                             docker.image("madbakoyoyo/node-chat-app:${env.BUILD_NUMBER}").push()
                         }
                     }
