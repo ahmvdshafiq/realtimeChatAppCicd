@@ -2,7 +2,6 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_CRED_ID = '564e7a8e-7f47-4031-aaf8-94446bbd3e98' 
         DOCKERHUB_CRED_ID = 'cf3a74d7-7de7-4028-8b23-456dec1e21b8'
     }
 
