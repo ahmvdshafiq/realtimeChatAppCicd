@@ -13,12 +13,6 @@ RUN npm install
 # Copy the rest of your application code
 COPY . .
 
-# Change permissions of the .npm directory
-RUN mkdir -p /.npm && chown -R node:node /.npm
-
-# Use a non-root user to run the app
-USER node
-
 # Expose the port your app runs on
 EXPOSE 3000
 
