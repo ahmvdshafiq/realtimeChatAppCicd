@@ -1,18 +1,26 @@
-# Use official Node.js image as a base
+# Use an official node runtime as a parent image
 FROM node:14
 
-# Set working directory
-WORKDIR /app
+# Create and change to the app directory
+WORKDIR /usr/src/app
 
-# Copy package.json and install dependencies
-COPY package.json ./
+# Copy application dependencies
+COPY package*.json ./
+
+# Install dependencies
 RUN npm install
 
-# Copy the rest of the app files
+# Copy the rest of your application code
 COPY . .
 
-# Expose the port the app runs on
+# Change permissions of the .npm directory
+RUN mkdir -p /.npm && chown -R node:node /.npm
+
+# Use a non-root user to run the app
+USER node
+
+# Expose the port your app runs on
 EXPOSE 3000
 
-# Command to run the app
-CMD ["node", "app.js"]
+# Define the command to run your app
+CMD [ "node", "app.js" ]
