@@ -16,7 +16,7 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    docker.build("madbakoyoko/node-chat-app:${env.BUILD_NUMBER}")
+                    docker.build("madbakoyoyo/node-chat-app:${env.BUILD_NUMBER}")
                 }
             }
         }
@@ -24,8 +24,11 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
-                    docker.withRegistry('https://index.docker.io/v1/', DOCKERHUB_CRED_ID) {
-                        docker.image("madbakoyoko/node-chat-app:${env.BUILD_NUMBER}").push()
+                    withCredentials([string(credentialsId: 'DH_PASS', variable: 'DOCKER_PASS')]) {
+                        docker.withRegistry('https://index.docker.io/v1/', 'dockerhub-credentials') {
+                            sh 'echo $DOCKER_PASS | docker login -u yourusername --password-stdin'
+                            docker.image("madbakoyoyo/node-chat-app:${env.BUILD_NUMBER}").push()
+                        }
                     }
                 }
             }
