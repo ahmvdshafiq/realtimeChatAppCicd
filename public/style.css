@@ -1,0 +1,62 @@
+/* General container style */
+.chat-container {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Chat box styles */
+.chat-box {
+    height: 350px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    overflow-y: scroll;
+}
+
+/* Message bubbles */
+.message {
+    padding: 10px 15px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    max-width: 70%;
+}
+
+.message.user {
+    background-color: #007bff;
+    color: white;
+    text-align: right;
+    margin-left: auto;
+}
+
+.message.other {
+    background-color: #f1f1f1;
+    color: #333;
+    text-align: left;
+}
+
+/* Input form styles */
+#message {
+    border-radius: 30px;
+    padding: 10px 15px;
+}
+
+/* Button styles */
+button[type="submit"] {
+    border-radius: 30px;
+}
+
+/* Scroll styling */
+.chat-box::-webkit-scrollbar {
+    width: 8px;
+}
+
+.chat-box::-webkit-scrollbar-thumb {
+    background-color: #007bff;
+    border-radius: 5px;
+}
