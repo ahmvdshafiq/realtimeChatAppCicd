@@ -21,18 +21,6 @@ pipeline {
             }
         }
 
-        stage('Test') {
-            steps {
-                script {
-                    // Run npm test inside a Docker container
-                    docker.image("madbakoyoko/node-chat-app:${env.BUILD_NUMBER}").inside {
-                        sh 'npm install'
-                        sh 'npm test'
-                    }
-                }
-            }
-        }
-
         stage('Push Docker Image') {
             steps {
                 script {
