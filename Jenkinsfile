@@ -49,7 +49,7 @@ pipeline {
 
                             # Run the container
                             docker run -d -p 3000:3000 --name node-chat-app madbakoyoyo/node-chat-app:${env.BUILD_NUMBER}
-                        EOF
+EOF
                         """
                     }
                 }
