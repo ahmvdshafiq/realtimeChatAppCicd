@@ -41,7 +41,7 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 script {
-                    withSonarQubeEnv('Sonarqube') { // Name of the SonarQube server in Jenkins configuration
+                    withSonarQubeEnv('Sonarqube') { // The name of your SonarQube configuration
                         sh """
                         ${SONAR_SCANNER_HOME}/bin/sonar-scanner \
                         -Dsonar.projectKey=real-chat-app \
