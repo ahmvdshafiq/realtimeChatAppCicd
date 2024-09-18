@@ -35,6 +35,16 @@ pipeline {
             }
         }
 
+        stage('Test') {
+            steps {
+                script {
+                    // Run tests using npm inside the container
+                    sh 'npm install'
+                    sh 'npm test'
+                }
+            }
+        }
+
         stage('Push Docker Image') {
             steps {
                 script {
