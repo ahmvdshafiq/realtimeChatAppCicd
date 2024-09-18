@@ -1,8 +1,8 @@
 pipeline {
     agent {
         docker {
-            image 'docker:19.03.12-dind'  // Use Docker-in-Docker image
-            args '-u root --privileged -v /var/run/docker.sock:/var/run/docker.sock' // Docker socket and privileges
+            image 'docker:19.03.12-dind'
+            args '--privileged -v /var/run/docker.sock:/var/run/docker.sock --entrypoint=""' // Disabling entrypoint
         }
     }
 
