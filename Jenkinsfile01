@@ -9,6 +9,8 @@ pipeline {
     environment {
         DOCKERHUB_CRED_ID = 'cf3a74d7-7de7-4028-8b23-456dec1e21b8'
         SONAR_SCANNER_HOME = tool 'Sonarqube'
+        SONARQUBE_URL = 'http://localhost:9000'
+        SONARQUBE_AUTH_TOKEN = credentials('sonarQube-token')
     }
 
         stages {
@@ -39,17 +41,14 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 script {
-                    // Run SonarQube Scanner with credentials
-                    withCredentials([string(credentialsId: 'sonarQube-token', variable: 'SONARQUBE_AUTH_TOKEN')]) {
-                        withSonarQubeEnv('SonarQubeServer') { // Name of your SonarQube server in Jenkins configuration
-                            sh """
-                            ${SONAR_SCANNER_HOME}/bin/sonar-scanner \
-                            -Dsonar.projectKey=real-chat-app \
-                            -Dsonar.sources=src \
-                            -Dsonar.host.url=${SONARQUBE_URL} \
-                            -Dsonar.login=${SONARQUBE_AUTH_TOKEN}
-                            """
-                        }
+                    withSonarQubeEnv('Sonarqube') { // Name of the SonarQube server in Jenkins configuration
+                        sh """
+                        ${SONAR_SCANNER_HOME}/bin/sonar-scanner \
+                        -Dsonar.projectKey=real-chat-app \
+                        -Dsonar.sources=src \
+                        -Dsonar.host.url=${SONARQUBE_URL} \
+                        -Dsonar.login=${SONARQUBE_AUTH_TOKEN}
+                        """
                     }
                 }
             }
