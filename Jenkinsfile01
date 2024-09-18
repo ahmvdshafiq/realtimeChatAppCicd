@@ -18,6 +18,15 @@ pipeline {
             }
         }
 
+    stage('Install Node.js') {
+            steps {
+                script {
+                    // Install Node.js in the Docker container
+                    sh 'apk add --no-cache nodejs npm'  // Using Alpine package manager since Docker base is Alpine
+                }
+            }
+        }
+
         stage('Build') {
             steps {
                 script {
