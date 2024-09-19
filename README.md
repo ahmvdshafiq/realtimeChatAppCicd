@@ -44,29 +44,14 @@ To run this project, ensure the following are set up:
 
 
 
+## Tools and Technologies
 
-Getting Started
-1. Configure Jenkins Pipeline
-Ensure your Jenkinsfile is configured properly for a Docker-in-Docker agent setup. 
-2. Set Up AWS EC2
-Launch an AWS EC2 instance and ensure Docker is installed.
-Ensure the EC2 instance has the appropriate security groups configured for SSH and HTTP/HTTPS traffic.
-3. Docker Registry
-Configure Docker credentials in Jenkins for accessing the Docker registry.
-The image will be stored in the registry (e.g., Docker Hub or Amazon ECR) and pulled by the EC2 instance during the deployment stage.
+1. Jenkins: For CI/CD automation.
+2. Docker-in-Docker (DinD): To containerize the application and manage dependencies within the Jenkins agent.
+3. AWS EC2: As the deployment environment for hosting the application.
+4 .SSH: For remote server deployment.
 
 
-Tools and Technologies
-Jenkins: For CI/CD automation.
-Docker-in-Docker (DinD): To containerize the application and manage dependencies within the Jenkins agent.
-AWS EC2: As the deployment environment for hosting the application.
-SSH: For remote server deployment.
-
-
-How to Run
-Clone the repository to your local machine.
-Set up Jenkins and configure the pipeline using the provided Jenkinsfile.
-Ensure AWS EC2 and Docker registry credentials are set up correctly in Jenkins.
-Run the pipeline in Jenkins to build, test, and deploy the application.
+## Expected Output
 
 ![Screenshot_2024-09-17_12-00-18](https://github.com/user-attachments/assets/5763b0ae-7cdf-4ac3-9717-d652781b58d3)
