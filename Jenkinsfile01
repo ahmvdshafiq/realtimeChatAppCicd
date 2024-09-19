@@ -51,7 +51,7 @@ pipeline {
         stage('Deploy to EC2') {
             steps {
                 script {
-                    withCredentials([sshUserPrivateKey(credentialsId: 'e542d8b5-4b38-4322-9cf3-ba466e22d55d', keyFileVariable: 'keyfile')]) {
+                    withCredentials([sshUserPrivateKey(credentialsId: '77fc5aed-0859-4073-9928-cb379b73c0ae', keyFileVariable: 'keyfile')]) {
                         sh """
                         ssh -o StrictHostKeyChecking=no -i ${keyfile} ubuntu@13.215.51.100 <<EOF
                             # Stop and remove any existing container
