@@ -12,7 +12,7 @@ The CI/CD pipeline involves the following stages:
 
 - **Docker Image Creation**: Upon a successful build and test, a Docker image is created from the application and tagged with the build version.
 
-- **Push Docker Image**: The newly created Docker image is pushed to a Docker registry (e.g., Docker Hub, Amazon ECR) to ensure it can be accessed for deployment.
+- **Push Docker Image**: The newly created Docker image is pushed to a Docker registry Docker Hub to ensure it can be accessed for deployment.
 
 - **Deploy to EC2**: The application is deployed to an AWS EC2 instance using the pushed Docker image. The deployment is done by pulling the Docker image from the registry and running it on the target EC2 instance.
 
