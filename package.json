@@ -11,10 +11,11 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.21.0",
-    "mocha": "^10.7.3",
     "socket.io": "^4.7.5"
   },
   "devDependencies": {
+    "chai": "^5.1.1",
+    "mocha": "^10.7.3",
     "mocha-junit-reporter": "^2.2.1"
   }
 }
