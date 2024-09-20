@@ -4,13 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --reporter mocha-junit-reporter --reporter-options mochaFile=./test-results.xml"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^4.21.0",
+    "mocha": "^10.7.3",
     "socket.io": "^4.7.5"
+  },
+  "devDependencies": {
+    "mocha-junit-reporter": "^2.2.1"
   }
 }
