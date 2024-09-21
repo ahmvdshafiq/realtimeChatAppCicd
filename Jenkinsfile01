@@ -52,7 +52,7 @@ pipeline {
             steps {
                 script {
                     // Run the Mocha tests and generate results in JUnit format for Jenkins
-                    sh 'npx mocha --reporter mocha-junit-reporter --reporter-options output=./test-results.xml'
+                    sh 'npx mocha --reporter xunit --reporter-options output=./test-results.xml'
                 }
             }
         }
