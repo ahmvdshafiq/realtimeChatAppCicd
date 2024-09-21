@@ -1,179 +1,76 @@
-// pipeline {
-//     agent {
-//         docker {
-//             image 'docker:19.03.12-dind'
-//             args '-u root --privileged -v /var/run/docker.sock:/var/run/docker.sock' // Docker socket and privileges
-//         }
-//     }
-
-//     environment {
-//         DOCKERHUB_CRED_ID = 'dockerhub-token'
-//     }
-
-//         stages {
-//             stage('Checkout') {
-//                 steps {
-//                     // Checkout the code from GitHub
-//                     git url: 'https://github.com/ahmvdshafiq/realtimeChatAppCicd', branch: 'master'
-//                 }
-//             }
-    
-//         stage('Install Node.js') {
-//                 steps {
-//                     script {
-//                         // Install Node.js in the Docker container
-//                         sh 'apk add --no-cache nodejs npm'  // Using Alpine package manager since Docker base is Alpine
-//                     }
-//                 }
-//             }
-
-//         stage('Build') {
-//             steps {
-//                 script {
-//                     docker.build("madbakoyoyo/node-chat-app:${env.BUILD_NUMBER}")
-//                 }
-//             }
-//         }
-
-//         stage('Push Docker Image') {
-//             steps {
-//                 script {
-//                     withCredentials([string(credentialsId: 'dh_pass', variable: 'dockethub_pass')]) {
-//                         docker.withRegistry('https://index.docker.io/v1/', DOCKERHUB_CRED_ID) {
-//                             sh 'echo $dockethub_pass | docker login -u madbakoyoyo --password-stdin'
-//                             docker.image("madbakoyoyo/node-chat-app:${env.BUILD_NUMBER}").push()
-//                         }
-//                     }
-//                 }
-//             }
-//         }
-
-//         stage('Deploy to EC2') {
-//             steps {
-//                 script {
-//                     withCredentials([sshUserPrivateKey(credentialsId: '77fc5aed-0859-4073-9928-cb379b73c0ae', keyFileVariable: 'keyfile')]) {
-//                         sh """
-//                         ssh -o StrictHostKeyChecking=no -i ${keyfile} ubuntu@13.215.51.100 <<EOF
-//                             # Stop and remove any existing container
-//                             docker stop node-chat-app || true
-//                             docker rm node-chat-app || true
-
-//                             # Pull the latest Docker image
-//                             docker pull madbakoyoyo/node-chat-app:${env.BUILD_NUMBER}
-
-//                             # Run the container
-//                             docker run -d -p 3000:3000 --name node-chat-app madbakoyoyo/node-chat-app:${env.BUILD_NUMBER}
-// EOF
-//                         """
-//                     }
-//                 }
-//             }
-//         }
-//     }
-// }
-
-
 pipeline {
-    agent {
-        docker {
-            image 'docker:19.03.12-dind'
-            args '-u root --privileged -v /var/run/docker.sock:/var/run/docker.sock'
-        }
-    }
+     agent {
+         docker {
+             image 'docker:19.03.12-dind'
+             args '-u root --privileged -v /var/run/docker.sock:/var/run/docker.sock' // Docker socket and privileges
+         }
+     }
 
-    environment {
-        DOCKERHUB_CRED_ID = 'dockerhub-token'
-    }
+     environment {
+         DOCKERHUB_CRED_ID = 'dockerhub-token'
+     }
 
-    stages {
-        stage('Checkout') {
-            steps {
-                git url: 'https://github.com/ahmvdshafiq/realtimeChatAppCicd', branch: 'master'
-            }
-        }
-
-        stage('Install Node.js') {
-            steps {
-                script {
-                    sh 'apk add --no-cache nodejs npm'  // Install Node.js and npm in Alpine
-                }
-            }
-        }
-
-        stage('Install Dependencies') {
-            steps {
-                script {
-                    // Install npm packages
-                    sh 'npm install'
-                }
-            }
-        }
-
-        stage('Run Mocha Tests') {
-            steps {
-                script {
-                    // Run Mocha tests with ES module support and generate results in JUnit format for Jenkins
-                    sh 'npm test'
-                }
-            }
-        }
-
-
-
-        stage('Publish Test Results') {
-            steps {
-                junit 'test-results/results.xml'  // Publish the Mocha test results
-            }
-        }
-
-        stage('Build') {
-            steps {
-                script {
-                    docker.build("madbakoyoyo/node-chat-app:${env.BUILD_NUMBER}")
-                }
-            }
-        }
-
-        stage('Push Docker Image') {
-            steps {
-                script {
-                    withCredentials([string(credentialsId: 'dh_pass', variable: 'dockethub_pass')]) {
-                        docker.withRegistry('https://index.docker.io/v1/', DOCKERHUB_CRED_ID) {
-                            sh 'echo $dockethub_pass | docker login -u madbakoyoyo --password-stdin'
-                            docker.image("madbakoyoyo/node-chat-app:${env.BUILD_NUMBER}").push()
-                        }
-                    }
-                }
-            }
-        }
-
-        stage('Deploy to EC2') {
-            steps {
-                script {
-                    withCredentials([sshUserPrivateKey(credentialsId: '77fc5aed-0859-4073-9928-cb379b73c0ae', keyFileVariable: 'keyfile')]) {
-                        sh """
-                        ssh -o StrictHostKeyChecking=no -i ${keyfile} ubuntu@13.215.51.100 <<EOF
-                            # Stop and remove any existing container
-                            docker stop node-chat-app || true
-                            docker rm node-chat-app || true
-
-                            # Pull the latest Docker image
-                            docker pull madbakoyoyo/node-chat-app:${env.BUILD_NUMBER}
-
-                            # Run the container
-                            docker run -d -p 3000:3000 --name node-chat-app madbakoyoyo/node-chat-app:${env.BUILD_NUMBER}
-EOF
-                        """
-                    }
-                }
-            }
-        }
-    }
+         stages {
+             stage('Checkout') {
+                 steps {
+                     // Checkout the code from GitHub
+                     git url: 'https://github.com/ahmvdshafiq/realtimeChatAppCicd', branch: 'master'
+                 }
+             }
     
-    post {
-        always {
-            cleanWs()  // Clean workspace after build
-        }
-    }
-}
+         stage('Install Node.js') {
+                 steps {
+                     script {
+                         // Install Node.js in the Docker container
+                         sh 'apk add --no-cache nodejs npm'  // Using Alpine package manager since Docker base is Alpine
+                     }
+                 }
+             }
+
+         stage('Build') {
+             steps {
+                 script {
+                     docker.build("madbakoyoyo/node-chat-app:${env.BUILD_NUMBER}")
+                 }
+             }
+         }
+
+         stage('Push Docker Image') {
+             steps {
+                 script {
+                     withCredentials([string(credentialsId: 'dh_pass', variable: 'dockethub_pass')]) {
+                         docker.withRegistry('https://index.docker.io/v1/', DOCKERHUB_CRED_ID) {
+                             sh 'echo $dockethub_pass | docker login -u madbakoyoyo --password-stdin'
+                             docker.image("madbakoyoyo/node-chat-app:${env.BUILD_NUMBER}").push()
+                         }
+                     }
+                 }
+             }
+         }
+
+         stage('Deploy to EC2') {
+             steps {
+                 script {
+                     withCredentials([sshUserPrivateKey(credentialsId: '77fc5aed-0859-4073-9928-cb379b73c0ae', keyFileVariable: 'keyfile')]) {
+                         sh """
+                         ssh -o StrictHostKeyChecking=no -i ${keyfile} ubuntu@13.215.51.100 <<EOF
+                             # Stop and remove any existing container
+                             docker stop node-chat-app || true
+                             docker rm node-chat-app || true
+
+                             # Pull the latest Docker image
+                             docker pull madbakoyoyo/node-chat-app:${env.BUILD_NUMBER}
+
+                             # Run the container
+                             docker run -d -p 3000:3000 --name node-chat-app madbakoyoyo/node-chat-app:${env.BUILD_NUMBER}
+ EOF
+                         """
+                     }
+                 }
+             }
+         }
+     }
+ }
+
+
 
