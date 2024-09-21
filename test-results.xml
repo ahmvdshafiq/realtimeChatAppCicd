@@ -1,0 +1,13 @@
+<testsuite name="Mocha Tests" tests="3" failures="0" errors="1" skipped="-1" timestamp="Sat, 21 Sep 2024 01:00:06 GMT" time="1.103">
+<testcase classname="WebSocket Server" name="should serve static files" file="/home/mad/realtimeChatAppCicd/test/test.mjs" time="0"/>
+<testcase classname="WebSocket Server" name="should connect and disconnect a socket" file="/home/mad/realtimeChatAppCicd/test/test.mjs" time="0.044"/>
+<testcase classname="WebSocket Server" name="should broadcast messages to all clients" file="/home/mad/realtimeChatAppCicd/test/test.mjs" time="0.032"/>
+<testcase classname="WebSocket Server" name="&#x22;after all&#x22; hook for &#x22;should broadcast messages to all clients&#x22;" file="/home/mad/realtimeChatAppCicd/test/test.mjs" time="0.004"><failure>Server is not running.
+Error [ERR_SERVER_NOT_RUNNING]: Server is not running.
+    at new NodeError (node:internal/errors:387:5)
+    at Server.close (node:net:1804:12)
+    at Object.onceWrapper (node:events:627:28)
+    at Server.emit (node:events:525:35)
+    at emitCloseNT (node:net:1857:8)
+    at processTicksAndRejections (node:internal/process/task_queues:82:21)</failure></testcase>
+</testsuite>

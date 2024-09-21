@@ -3,20 +3,22 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "mocha --reporter mocha-junit-reporter --reporter-options mochaFile=./test-results.xml"
+    "test": "mocha --reporter xunit --reporter-options output=./test-results.xml"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "esm": "^3.2.25",
     "express": "^4.21.0",
     "socket.io": "^4.7.5"
   },
   "devDependencies": {
     "chai": "^5.1.1",
     "mocha": "^10.7.3",
-    "mocha-junit-reporter": "^2.2.1",
+    "mocha-junit-reporter": "^1.23.1",
     "socket.io-client": "^4.7.5",
     "supertest": "^7.0.0"
   }
