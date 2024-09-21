@@ -1,4 +1,4 @@
-# CI/CD Pipeline with Jenkins using Docker as agent [Docker-in-Docker (DinD)] and deploy in AWS EC2
+# CI/CD Pipeline with Jenkins, Docker-in-Docker (DinD), and AWS EC2
 
 This project sets up a continuous integration and continuous deployment (CI/CD) pipeline using Jenkins with Docker-in-Docker (DinD) as the agent, Docker for containerization, and AWS EC2 for deployment. The pipeline automates the building, testing, and deployment of a web application to an EC2 instance, ensuring a streamlined and efficient development workflow.
 
