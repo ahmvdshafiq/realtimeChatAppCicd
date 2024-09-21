@@ -112,11 +112,12 @@ pipeline {
         stage('Run Mocha Tests') {
             steps {
                 script {
-                    // Run the tests with ES module support and generate results in JUnit format for Jenkins
-                    sh 'npx mocha --loader ts-node/esm --reporter mocha-junit-reporter --reporter-options mochaFile=./test-results/results.xml'
+                    // Run Mocha tests with ES module support and generate results in JUnit format for Jenkins
+                    sh 'npx mocha --reporter mocha-junit-reporter --reporter-options mochaFile=./test-results/results.xml'
                 }
             }
         }
+
 
 
         stage('Publish Test Results') {
