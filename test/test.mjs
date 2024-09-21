@@ -4,37 +4,46 @@ import ioClient from 'socket.io-client';
 
 let clientSocket1, clientSocket2;
 
-describe('WebSocket Server', function() {
-    this.timeout(20000);  // Set timeout to 20 seconds
+describe('WebSocket Server', function () {
+    this.timeout(20000);  // Set timeout to 20 seconds for the whole suite
 
     before((done) => {
-        server.listen(3001, () => {
-            console.log('Test server running on port 3001');
-            setTimeout(done, 1000);  // Delay to ensure the server is fully initialized
-        });
+        if (!server.listening) {
+            // Start the server only if it's not already running
+            server.listen(3001, () => {
+                console.log('Test server running on port 3001');
+                setTimeout(done, 1000);  // Ensure server is fully initialized
+            });
+        } else {
+            done();
+        }
     });
 
     after((done) => {
-        // Close the client sockets first
-        clientSocket1 && clientSocket1.disconnect();
-        clientSocket2 && clientSocket2.disconnect();
-        
-        // Ensure the server is running before closing it
+        // Safely disconnect the clients
+        if (clientSocket1) clientSocket1.disconnect();
+        if (clientSocket2) clientSocket2.disconnect();
+
+        // Safely close the server and the Socket.IO instance
         if (server.listening) {
-            io.close();  // Close Socket.IO server
-            server.close(done);  // Close HTTP server
+            io.close();  // Close the Socket.IO server
+            server.close(() => {
+                console.log('Test server stopped');
+                done();
+            });
         } else {
-            done();  // Server is not running, just complete the after hook
+            console.warn('Server is not running.');
+            done();  // Complete the after hook if the server is not running
         }
     });
 
     it('should serve static files', (done) => {
-        // Static file serving logic can go here
+        // Static file serving logic here (if needed)
         done();
     });
 
-    it('should connect and disconnect a socket', function(done) {
-        this.timeout(15000);  // Set specific timeout for this test
+    it('should connect and disconnect a socket', function (done) {
+        this.timeout(15000);  // Specific timeout for this test
         clientSocket1 = ioClient('http://localhost:3001');
 
         clientSocket1.on('connect', () => {
@@ -53,7 +62,7 @@ describe('WebSocket Server', function() {
         });
     });
 
-    it('should broadcast messages to all clients', function(done) {
+    it('should broadcast messages to all clients', function (done) {
         this.timeout(15000);
         clientSocket1 = ioClient('http://localhost:3001');
         clientSocket2 = ioClient('http://localhost:3001');
