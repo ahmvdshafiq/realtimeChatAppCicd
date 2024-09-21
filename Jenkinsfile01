@@ -21,10 +21,10 @@ pipeline {
          stage('Install Node.js') {
             steps {
                 script {
-                    // Install GNU tar and Node.js v16.20.2 directly in Alpine
+                    // Install Node.js v16.20.2 directly using BusyBox tar
                     sh '''
-                    apk add --no-cache curl gnu-tar
-                    curl -fsSL https://unofficial-builds.nodejs.org/download/release/v16.20.2/node-v16.20.2-linux-x64-musl.tar.xz | gtar -xJ -C /usr/local --strip-components=1
+                    apk add --no-cache curl
+                    curl -fsSL https://unofficial-builds.nodejs.org/download/release/v16.20.2/node-v16.20.2-linux-x64-musl.tar.xz | tar -xJ -C /usr/local --strip-components=1
                     '''
                 }
             }
