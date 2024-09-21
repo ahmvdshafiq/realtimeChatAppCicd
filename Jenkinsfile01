@@ -21,9 +21,9 @@ pipeline {
          stage('Install Node.js') {
             steps {
                 script {
-                    // Install Node.js v16.20.2 directly using BusyBox tar
+                    // Install Node.js v16.20.2 along with required dependencies
                     sh '''
-                    apk add --no-cache curl
+                    apk add --no-cache curl libstdc++ gcc g++
                     curl -fsSL https://unofficial-builds.nodejs.org/download/release/v16.20.2/node-v16.20.2-linux-x64-musl.tar.xz | tar -xJ -C /usr/local --strip-components=1
                     '''
                 }
