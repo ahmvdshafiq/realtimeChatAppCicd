@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "mocha --reporter xunit --reporter-options output=./test-results.xml"
+    "test": "mocha --loader ts-node/esm --reporter mocha-junit-reporter --reporter-options mochaFile=./test-results/results.xml"
   },
   "keywords": [],
   "author": "",
