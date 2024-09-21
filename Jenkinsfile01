@@ -113,7 +113,7 @@ pipeline {
             steps {
                 script {
                     // Run Mocha tests with ES module support and generate results in JUnit format for Jenkins
-                    sh 'npx mocha --reporter mocha-junit-reporter --reporter-options mochaFile=./test-results/results.xml'
+                    sh 'npm test'
                 }
             }
         }
