@@ -27,6 +27,15 @@ pipeline {
                  }
              }
 
+          stage('Check Node.js version') {
+                 steps {
+                     script {
+                         // Check Node.js in the Docker container
+                         sh 'node -v'  // Using Alpine package manager since Docker base is Alpine
+                     }
+                 }
+             }
+
          stage('Build') {
              steps {
                  script {
